@@ -27,7 +27,7 @@ module.exports = async function (fastify, opts) {
 
     const result = await UrlModel.find()
     .or(
-      [{ _id: ObjectId.isValid(q) ? new ObjectId(q) : new ObjectId('timtomtamted') }, { site: { $regex: '.*' + q + '.*' } }]
+      [{ _id: ObjectId.isValid(q) ? new ObjectId(q) : new ObjectId('timtomtamted') }, { site: { $regex: '.*' + q + '.*' , $options: "i"} }]
     )
     .catch(()=>([]));
 
