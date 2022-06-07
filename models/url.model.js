@@ -24,7 +24,11 @@ const urlSchema = new Schema({
         img : String
     },
     qr : String,
-    redirectUrl : String
+    redirectUrl : String,
+    sessionId : {
+        type: String,
+        index: true
+    }
 });
 
 urlSchema.plugin(mongooseFuzzySearching, { fields: ['site'] });

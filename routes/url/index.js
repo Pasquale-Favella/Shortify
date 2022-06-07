@@ -1,5 +1,7 @@
 'use strict'
 
+const {calcExpiryHours} = require('../../utils/date')
+
 const bodyJsonSchema = {
   type: 'object',
   required: ['site'],
@@ -25,10 +27,17 @@ module.exports = async function (fastify, opts) {
   });
 
   fastify.post('/', {body: bodyJsonSchema} ,async function (request, reply) {
+
     const body = request.body;
+
     try{
 
-      const model = await UrlModel.create(body);
+      const docAlreadyInserted = await UrlModel.find({sessionId :request.session.sessionId}).sort({createdAt:1});
+
+      if(docAlreadyInserted.length > 2)
+        return reply.code(404).send({message : `Number of url created exceeded wait for ${calcExpiryHours(docAlreadyInserted[0].createdAt)}`})
+
+      const model = await UrlModel.create({...body,sessionId :request.session.sessionId});
           
       return reply.code(201).send(model);
 
