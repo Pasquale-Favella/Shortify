@@ -25,11 +25,11 @@ module.exports = async function (fastify, opts) {
 
     if(!q) return reply.code(404).send({message : 'Search term is required'});
 
-    const result = await UrlModel.findOne()
+    const result = await UrlModel.find()
     .or(
-      [{ _id: ObjectId.isValid(q) ? new ObjectId(q) : new ObjectId('timtomtamted') }, { site: q }]
+      [{ _id: ObjectId.isValid(q) ? new ObjectId(q) : new ObjectId('timtomtamted') }, { site: { $regex: '.*' + q + '.*' } }]
     )
-    .catch(()=>({}));
+    .catch(()=>([]));
 
     return result;
   });

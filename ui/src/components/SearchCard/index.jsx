@@ -1,4 +1,3 @@
-import { useSearchCtx } from "../../hooks/use-searchctx";
 import RenderIf from "../RenderIf";
 
 import { Link } from "react-router-dom";
@@ -10,8 +9,7 @@ import { useState } from "react";
 import { saveAs } from 'file-saver';
 import CountDown from "../ShortCard/CountDown";
 
-export default function SearchCard(){
-    const { result , isLoading } = useSearchCtx();
+export default function SearchCard({ result = {}, isLoading = false}){
 
     const [copy , setCopy] = useState(false);
 
