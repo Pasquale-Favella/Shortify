@@ -28,10 +28,10 @@ export default function SearchCard({ result = {}, isLoading = false}){
 
     return (
         <div className={`hero bg-base-200 mt-4 rounded ${isLoading && 'animate-pulse w-100 h-[300px]'}`}>
-            <div className="hero-content flex-col lg:flex-row">
+            <div className="hero-content flex-col lg:flex-row lg:w-full">
             <RenderIf condition={result?._id}>
-                <img src={result?.qr} width={300} height={300} className="max-w-sm rounded-lg shadow-2xl" />
-                <div>
+                <img src={result?.qr} className="max-w-sm rounded-lg shadow-2xl object-cover object-center h-60 w-60" />
+                <div className="flex-1">
                 <RenderIf condition={result?.preview}>
                     <div className="flex gap-4">
                         <RenderIf condition={result?.preview?.img}>
